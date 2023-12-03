@@ -1,0 +1,18 @@
+.container {
+    position: relative;
+  }
+
+  .button {
+    margin-bottom: 10px;
+  }
+
+  #filterInput {
+    border: 1px solid #ccc; 
+    padding: 8px;
+    font-size: 16px;
+    color: #333;
+    width: 400px;
+    position: absolute;
+    top: -4px; 
+    right: 12px; 
+  }
