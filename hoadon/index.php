@@ -7,25 +7,49 @@
     <title>Bootstrap demo</title>
     <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65' crossorigin='anonymous'>
 </head>
+<style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .navbar {
+            background-color: #333;
+            overflow: hidden;
+            text-align: left;
+            width: 100%;
+        }
+
+        .navbar a {
+            float: left;
+            display: block;
+            color: white;
+            text-align: left;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        .navbar a:hover {
+            background-color: #ddd;
+            color: blue;
+        }
+    </style>
+
+    <!-- Liên kết CSS Bootstrap bằng CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
 
 <body>
-    <main>
+<div class="navbar left-align">
+    <a href="../view/index.php">Home</a>
+    <a href="./index.php">Hóa đơn</a>
+    <a href="../nhanvien/">Nhân Viên</a>
+    <a href="../thanhvien">Thành Viên</a>
+    <!-- Add more navigation links as needed -->
+</div>
+<body>
 
-        <section class='py-5 text-center container'>
-            <div class='row py-lg-5'>
-                <div class='col-lg-6 col-md-8 mx-auto'>
-                <div class='col-lg-6 col-md-8 mx-auto'>
-                    <h1 class='fw-light'>Trang hóa đơn</h1>
-                    <p>
-                        <a href='../view' class='btn btn-secondary my-2'>Trở lại</a>
-                    </p>
-                </div>
-                </div>
-            </div>
-        </section>
-
-
-    </main>
     <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js' integrity='sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4' crossorigin='anonymous'></script>
 </body>
 
@@ -100,18 +124,18 @@
             </select>
 
         <table class="table table-borderd"   id="tab-prod">
-            <thead>
+            <thead >
                 <tr>
-                    <th class="sortable" data-column="So_hoa_don">Số hóa đơn <i class="fas fa-sort right-align"></i></th>
-                    <th class="sortable" data-column="Ten_hoa_don">Tên hóa đơn<i class="fas fa-sort right-align"></i></th>
-                    <th class="sortable" data-column="Thoi_gian_xuat">Thời gian xuất<i class="fas fa-sort right-align"></i></th>
-                    <th class="sortable" data-column="Ma_khach_hang">Mã khách hàng<i class="fas fa-sort right-align"></i></th>
+                    <th class="sortable" data-column="So_hoa_don">Số hóa đơn </th>
+                    <th class="sortable" data-column="Ten_hoa_don">Tên hóa đơn</th>
+                    <th class="sortable" data-column="Thoi_gian_xuat">Thời gian xuất</th>
+                    <th class="sortable" data-column="Ma_khach_hang">Mã khách hàng</th>
                     <th>Mã giảm giá</th>
                     <th>Mã chương trình</th>
                     <th>Mã số nhân viên duyệt</th>
                     <th>CCCD nhân viên duyệt</th>
-                    <th class="sortable" data-column="Ma_chi_nhanh">Mã chi nhánh<i class="fas fa-sort right-align"></i></th>
-                    <th class="sortable" data-column="Tong_tien">Tổng tiền<i class="fas fa-sort right-align"></i></th>
+                    <th class="sortable" data-column="Ma_chi_nhanh">Mã chi nhánh</th>
+                    <th class="sortable" data-column="Tong_tien">Tổng tiền</th>
                 </tr>
             </thead>
             <tbody>

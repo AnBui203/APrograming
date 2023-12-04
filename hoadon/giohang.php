@@ -25,7 +25,7 @@ $conn = OpenCon();
     }
 
        sqlsrv_close($conn);
-
+//echo $Update_sp;
     header('location:edit.php?id='. $id );
 
 ?>

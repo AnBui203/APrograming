@@ -20,10 +20,48 @@
 </head>
 
 <body>
-<nav class="navbar navbar-light justify-content-center fs-3 mb-5" style="background-color: #00ff5573;">
-    <a href="index.php">CircleK by Night Stalker - Quản lý thành viên</a>
-  </nav>
+<style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
 
+        .navbar {
+            background-color: #333;
+            overflow: hidden;
+            text-align: left;
+            width: 100%;
+        }
+
+        .navbar a {
+            float: left;
+            display: block;
+            color: white;
+            text-align: left;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        .navbar a:hover {
+            background-color: #ddd;
+            color: blue;
+        }
+    </style>
+
+    <!-- Liên kết CSS Bootstrap bằng CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+      
+<body>
+<div class="navbar left-align">
+    <a href="../view/index.php">Home</a>
+    <a href="../hoadon">Hóa đơn</a>
+    <a href="../nhanvien/">Nhân Viên</a>
+    <a href="../thanhvien">Thành Viên</a>
+    <!-- Add more navigation links as needed -->
+</div>
+</br>
   <div class="container">
     <?php
     if (isset($_GET["msg"])) {
@@ -34,12 +72,12 @@
     </div>';
     }
     ?>
-    <a href="addThanhVien.php" class="btn btn-dark mb-3">Thêm thành viên mới</a>
+    <a href="addThanhVien.php" class="btn btn-primary mb-3">Thêm thành viên mới</a>
 
     <input type="text" id="filterInput" placeholder="Tìm kiếm...">
 
     <table class="table table-hover text-center">
-      <thead class="table-dark">
+      <thead class="table-primary">
         <tr>
           <th scope="col">Mã thành viên</th>
           <th scope="col">CCCD</th>
@@ -50,7 +88,7 @@
           <th scope="col">Hành động</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody class="table table-striped mt-2">
         <?php
         require_once('connectDB.php');
 
@@ -82,17 +120,7 @@
     </table>
   </div>
   
-  <section class='py-5 text-center container'>
-      <div class='row py-lg-5'>
-          <div class='col-lg-6 col-md-8 mx-auto'>
-          <div class='col-lg-6 col-md-8 mx-auto'>
-              <p>
-                  <a href='../view' class='btn btn-secondary my-2'>Trở lại trang chính</a>
-              </p>
-          </div>
-          </div>
-      </div>
-  </section>
+
 
   <script>
   function filterTable() {

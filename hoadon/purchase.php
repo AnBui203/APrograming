@@ -21,7 +21,6 @@
 
                 if(sqlsrv_has_rows(sqlsrv_query($conn,"SELECT * FROM [dbo].[San_pham] WHERE Ma_vach='$code'"))){
                     sqlsrv_query($conn, $Insertinto_sp);
-                    sqlsrv_query($conn, $Update_sp);
                 }else sqlsrv_query($conn, $Insertinto_cb);
                          
                 $quantities[$i] = 0;

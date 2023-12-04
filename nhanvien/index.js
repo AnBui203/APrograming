@@ -1,5 +1,6 @@
 $(".btn-edit").click(function (e) {
     const Ma_so = this.getAttribute('data-bs-Ma_so')
+    console.log(Ma_so);
     $("#Edit input[name='Ma_so']").val(Ma_so);
     const Dia_chi = this.getAttribute('data-bs-Dia_chi')
     $("#Edit input[name='Dia_chi']").val(Dia_chi);
@@ -13,6 +14,7 @@ $(".btn-edit").click(function (e) {
     $("#Edit input[name='Email']").val(Email);
     $('#Edit').modal('show');
 });
+
 
 $(".btn-delete").click(function (e) {
     const Ma_so = this.getAttribute('data-bs-Ma_so')

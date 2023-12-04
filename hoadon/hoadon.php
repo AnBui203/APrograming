@@ -43,45 +43,35 @@
             $ma_giam_gia = NULL;
         }
         if (empty($ma_chuong_trinh)) {
-            $ma_chuong_trinh = 'NULL';
+            $ma_chuong_trinh = NULL;
         }
+        echo("ma_kh lor");
         if (empty($ma_khach_hang)) {
             $ma_khach_hang = 0;
-        }elseif(!empty($ma_khach_hang)){
+            //echo("ma_kh lor");
+        }elseif(!empty($ma_khach_hang)) {
+            //echo("ma_kh lor1");
             $result_ma_kh = sqlsrv_query($conn,"SELECT* FROM [dbo].[Khach_hang] WHERE Ma_khach_hang = $ma_khach_hang");
-            if (!sqlsrv_has_rows($result_ma_kh)) {
-                $errors[] = "Khách hàng đã vanish";
+            if ($result_ma_kh != false && !sqlsrv_has_rows($result_ma_kh)) {
+                $errors[] = "Khách hàng không tồn tại";
+                //echo("ma_kh lor");
             }
-        }elseif (!empty($ma_giam_gia)) {
-            $result_ma_gg = sqlsrv_query($conn,"SELECT * FROM [dbo].[Phieu_giam_gia] pg JOIN [dbo].Thanh_vien tv
+        }if (!empty($ma_giam_gia)) {
+             $result_ma_gg = sqlsrv_query($conn,"SELECT * FROM [dbo].[Phieu_giam_gia] pg JOIN [dbo].Thanh_vien tv
                                                 ON pg.Ma_thanh_vien = tv.Ma_thanh_vien
                                                 WHERE Ma_giam_gia = $ma_giam_gia AND Ma_khach_hang = $ma_khach_hang");
             if (!sqlsrv_has_rows($result_ma_gg)) {
+                $ma_giam_gia = NULL;
                 $errors[] = "Mã giảm giá không tồn tại cho khách hàng này";
             }
         }
-         if ($errors) {
-            //  $_SESSION['error'] = $errors;
-            //  header('Location: edit.php?id=' . $id);
-            //  exit();
-            foreach ($errors as $error) {
-                echo '<div>' . htmlspecialchars($error) . '</div>';
-            }
 
-            }
-    $check_kh = "SELECT * FROM [dbo].[Khach_hang] WHERE Ma_khach_hang = '$ma_khach_hang'";
-    $Insert_kh =" INSERT INTO [dbo].[Khach_hang] VALUES ('$ma_khach_hang')";
-    
-
-    $exist_kh = sqlsrv_query($conn, $check_kh);
-    if (!sqlsrv_has_rows($exist_kh)){
-        $insert_error =sqlsrv_query($conn, $Insert_kh);
-        if ($insert_error === false) {
-            die(print_r(sqlsrv_errors(), true));
-        }
-    }elseif ($exist_kh === false) {
-        die(print_r(sqlsrv_errors(), true));
-    }
+         if ($errors){
+            echo (1);
+                $err = implode(",", $errors);
+                header("Location: edit.php?id=".urlencode($id)."&err=".urlencode($err));
+            }else{
+                
 
     $update_error = $updatehoadon = "EXEC Cap_nhat_hd '$ten_hoa_don', '$ma_khach_hang', '$ma_nhan_vien', '$ma_chi_nhanh', '$id',". ($ma_giam_gia ? $ma_giam_gia:'NULL') .",". ($ma_chuong_trinh ? $ma_chuong_trinh:'NULL');
     echo($updatehoadon);
@@ -92,6 +82,7 @@
  
 
     sqlsrv_close($conn);
-    header('location:edit.php?id='. $id );
+   header('location:edit.php?id='. $id );
+}
     
 ?>

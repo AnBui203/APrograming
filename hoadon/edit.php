@@ -15,20 +15,22 @@
         .navbar {
             background-color: #333;
             overflow: hidden;
+            text-align: left;
+            width: 100%;
         }
 
         .navbar a {
             float: left;
             display: block;
             color: white;
-            text-align: center;
+            text-align: left;
             padding: 14px 16px;
             text-decoration: none;
         }
 
         .navbar a:hover {
             background-color: #ddd;
-            color: black;
+            color: blue;
         }
     </style>
 
@@ -37,13 +39,25 @@
 </head>
 
 <body>
-<div class="navbar">
-    <a href="index.php">Home</a>
+<div class="navbar left-align">
+    <a href="../view/index.php">Home</a>
+    <a href="./index.php">Hóa đơn</a>
+    <a href="../nhanvien/">Nhân Viên</a>
+    <a href="../thanhvien">Thành Viên</a>
     <!-- Add more navigation links as needed -->
 </div>
     <?php
     session_start();
-   
+    $id = urldecode($_GET['id']);
+    if (isset($_GET['err'])) {
+        $errors = explode(",", urldecode($_GET['err']));
+    
+        foreach ($errors as $error) {
+            echo "<p>Error: $error</p>";
+        }
+    } else {
+        echo "<p>Totally normal.</p>";
+    }
     // Truy vấn database
     // 1. Include file cấu hình kết nối đến database, khởi tạo kết nối $conn
     include_once(__DIR__ . '/../connectDB.php');
@@ -51,7 +65,7 @@
 
     // 2. Chuẩn bị câu truy vấn $sqlSelect, lấy dữ liệu ban đầu của record cần update
     // Lấy giá trị khóa chính được truyền theo dạng QueryString Parameter key1=value1&key2=value2...
-    $id = $_GET['id'];
+    
     $sqlSelect = "SELECT * FROM [dbo].[Hoa_don] WHERE So_hoa_don=$id;";
 
     // 3. Thực thi câu truy vấn SQL để lấy về dữ liệu ban đầu của record cần update

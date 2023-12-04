@@ -2,9 +2,9 @@
 
 function OpenCon()
  {
-$dbhost = "nghiaha2003";
-$connection = array("Database"=>"BTL2","UID"=> "as", "PWD"=>"12345");
-$conn = sqlsrv_connect($dbhost, $connection);
+    $dbhost = "BUI-AN-PC\SQLEXPRESS";
+    $connection = array("Database"=>"CircleK","UID"=> "buian", "PWD"=>"12345");
+    $conn = sqlsrv_connect($dbhost,$connection);
 if ($conn === false) {
     die(print_r(sqlsrv_errors(), true));
 }

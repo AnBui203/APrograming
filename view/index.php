@@ -7,20 +7,61 @@
     <title>Bootstrap demo</title>
     <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65' crossorigin='anonymous'>
 </head>
+<style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
 
+        .navbar {
+            background-color: #333;
+            overflow: hidden;
+            text-align: left;
+            width: 100%;
+        }
+
+        .navbar a {
+            float: left;
+            display: block;
+            color: white;
+            text-align: left;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        .navbar a:hover {
+            background-color: #ddd;
+            color: blue;
+        }
+    </style>
+
+    <!-- Liên kết CSS Bootstrap bằng CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+
+<body>
+<div class="navbar left-align">
+    <a href="../view/index.php">Home</a>
+    <a href="../hoadon">Hóa đơn</a>
+    <a href="../nhanvien/">Nhân Viên</a>
+    <a href="../thanhvien">Thành Viên</a>
+    <a href='../' class='btn btn-secondary my-2'>Trở lại đăng nhập</a>
+    <!-- Add more navigation links as needed -->
+</div>
 <body>
     <main>
 
         <section class='py-5 text-center container'>
             <div class='row py-lg-5'>
                 <div class='col-lg-6 col-md-8 mx-auto'>
-                    <h1 class='fw-light'>Trang bán hàng chính</h1>
+                    <h1 class='fw-light'>Trang Chủ</h1>
                     <p class='lead text-muted'>Ở đây sẽ liệt kê các sản phẩm chính của trang web, bao gồm cả ảnh vào nhà hàng đang chế biến nó</p>
                     <p>
                         <a href='../hoadon' class='btn btn-primary my-2'>Đến hóa đơn</a>
                         <a href='../nhanvien' class='btn btn-primary my-2'>Đến nhân viên</a>
                         <a href='../thanhvien' class='btn btn-primary my-2'>Đến thành viên</a>
-                        <a href='../' class='btn btn-secondary my-2'>Trở lại đăng nhập</a>
+                        
                     </p>
                 </div>
             </div>

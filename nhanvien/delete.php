@@ -3,13 +3,15 @@ require_once('connectDB.php');
 $Ma_so = $_POST['Ma_so'];
 
 $conn = OpenCon();
-$query = "CALL Delete_nhan_vien('$Ma_so')";
+$query = "EXEC Delete_nhan_vien $Ma_so";
 
-if ($conn->query($query) === TRUE) {
+$ok = sqlsrv_query($conn,$query);
+
+if ($ok != false) {
     echo "Successfully";
     header('Location: index.php');
 } else {
-    echo "Error: " . $query . "<br>" . $conn->error;
-    header('Location: index.php?err=' . $conn->error);
+    echo "Error: " . $query . "<br>". $ok ;
+    die(print_r(sqlsrv_errors(), true));
 }
 ?>

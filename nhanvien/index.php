@@ -8,22 +8,64 @@
 
     <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65' crossorigin='anonymous'>
 </head>
+<style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
 
+        .navbar {
+            background-color: #333;
+            overflow: hidden;
+            text-align: left;
+            width: 100%;
+        }
+
+        .navbar a {
+            float: left;
+            display: block;
+            color: white;
+            text-align: left;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        .navbar a:hover {
+            background-color: #ddd;
+            color: blue;
+        }
+    </style>
+
+    <!-- Liên kết CSS Bootstrap bằng CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+
+<body>
+<div class="navbar left-align">
+    <a href="../view/index.php">Home</a>
+    <a href="../hoadon">Hóa đơn</a>
+    <a href="../nhanvien/">Nhân Viên</a>
+    <a href="../thanhvien">Thành Viên</a>
+    <!-- Add more navigation links as needed -->
+</div>
 <body>
     <main>
     <div class="container">
-        <a href="../view" class="btn btn-warning float-end">Trở lại</a>
         <h1 class="my-3">Quản lí nhân viên</h1>
         <hr>
         <?php
         if (isset($_GET['err'])) {
-            echo "<div class=\"alert alert-warning alert-dismissible fade show\" role=\"alert\">";
-            echo "<strong>Error: </strong>" . $_GET['err'];
-            echo "<button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"alert\" aria-label=\"Close\"></button>";
-            echo "</div>";
+            $errors = explode(",", $_GET['err']);
+        
+            foreach ($errors as $error) {
+                echo "<p>Error: $error</p>";
+            }
+        } else {
+            echo "<p>Totally normal.</p>";
         }
         ?>
-        <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#add">Thêm NV</button>
+        <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#add">Thêm nhân viên</button>
         <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
@@ -51,7 +93,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Ngày sinh</label>
-                                <input class="form-control my-2" placeholder="Ngày sinh" name="Ngay_sinh" />
+                                <input class="form-control my-2" placeholder="YYYY-MM-DD" name="Ngay_sinh" />
                             </div>
                             <div class="form-group">
                                 <label>Giới tính</label>
@@ -88,8 +130,8 @@
                     <th scope="col">Ngày sinh</th>
                     <th scope="col">Giới tính</th>
                     <th scope="col">Mã chi nhánh</th>
-                    <th scope="col">Số điện thoại</th>
                     <th scope="col">Email</th>
+                    <th scope="col">SDT</th>
                 </tr>
             </thead>
             <tbody>
@@ -97,34 +139,53 @@
                 require_once('connectDB.php');
 
                 $conn = OpenCon();
-                $query = "SELECT * FROM `Nhan_vien`;";
+                $query = "SELECT nv.*, em.Email, dt.SDT FROM [dbo].[Nhan_vien] nv    
+                LEFT JOIN [dbo].[Email_nhan_vien] em ON nv.Ma_so = em.Ma_so
+                LEFT JOIN [dbo].[SDT_nhan_vien] dt ON nv.Ma_so = dt.Ma_so";
 
-                $result = $conn->query($query);
-
-                if ($result->num_rows > 0) {
-                    // OUTPUT DATA OF EACH ROW
-                    while ($row = $result->fetch_assoc()) {
-                    ?>
-                        <tr class="justify-content-center">
-                            <th class='align-middle' scope="row"><?php echo $row['Ho_va_ten'] ?></th>
+                $result = sqlsrv_query($conn,$query);
+                $data = [];
+                if (sqlsrv_has_rows($result)) {
+                    while ($row =sqlsrv_fetch_array($result)){
+                        $data[] = array(
+                                "Ho_va_ten"=> $row["Ho_va_ten"],
+                                "Ma_so" => $row['Ma_so'],
+                                "CCCD" => $row['CCCD'] ,
+                                "Dia_chi" => $row['Dia_chi'],
+                                'Ngay_sinh' => $row['Ngay_sinh'] instanceof DateTime ? $row['Ngay_sinh']->format('Y-m-d') : null,
+                                "Gioi_tinh" => $row['Gioi_tinh'],
+                                "Ma_chi_nhanh" => $row['Ma_chi_nhanh'],
+                                "Email" => $row["Email"],
+                                "SDT" => $row["SDT"],
+                        );
+        
+                        }
+                }
+                
+                    foreach ($data as $row) :
+                    
+                    ?>  
+                            
+                            <tr class="justify-content-center">
+                            <th class='align-middle'><?php echo $row['Ho_va_ten'] ?></th>
                             <td class='align-middle'><?php echo $row['Ma_so'] ?></td>
                             <td class='align-middle'><?php echo $row['CCCD'] ?></td>
                             <td class='align-middle'><?php echo $row['Dia_chi'] ?></td>
-                            <td class='align-middle'><?php echo $row['Ngay_sinh'] ?></td>
+                            <td class='align-middle'><?php echo $row['Ngay_sinh']  ?></td> 
                             <td class='align-middle'><?php echo $row['Gioi_tinh'] ?></td>
                             <td class='align-middle'><?php echo $row['Ma_chi_nhanh'] ?></td>
-                            <td class='align-middle'><?php echo $row['SDT'] ?></td>
                             <td class='align-middle'><?php echo $row['Email'] ?></td>
+                            <td class='align-middle'><?php echo $row['SDT'] ?></td>
+                            
                             <td class='align-middle'>
                                 <div class="d-inline-flex">
-                                    <button type='button' class='btn-edit btn btn-primary m-1' data-bs-Ma_so='<?php echo $row['Ma_so'] ?>' data-bs-Dia_chi='<?php echo $row['Dia_chi'] ?>' data-bs-Ngay_sinh='<?php echo $row['Ngay_sinh'] ?>' data-bs-Ma_chi_nhanh='<?php echo $row['Ma_chi_nhanh'] ?>' data-bs-SDT='<?php echo $row['SDT'] ?>' data-bs-Email='<?php echo $row['Email'] ?>' data-bs-target='#Edit' data-bs-toggle='modal'>Edit</button>
+                                    <button type='button' class='btn-edit btn btn-primary m-1' data-bs-Ma_so='<?php echo $row['Ma_so'] ?>' data-bs-Dia_chi='<?php echo $row['Dia_chi'] ?>' data-bs-Ngay_sinh='<?php echo $row['Ngay_sinh'] ?>' data-bs-Ma_chi_nhanh='<?php echo $row['Ma_chi_nhanh'] ?>' data-bs-Email='<?php echo $row['Email'] ?>' data-bs-SDT='<?php echo $row['SDT'] ?>'  data-bs-target='#Edit' data-bs-toggle='modal'>Edit</button>
                                     <button type='button' class='btn-delete btn btn-danger m-1' data-bs-Ma_so='<?php echo $row['Ma_so'] ?>' data-bs-target='#Delete' data-bs-toggle='modal'>Delete</button>
                                 </div>
                             </td>
                         </tr>
                 <?php
-                    }
-                }
+                    endforeach;
             ?>
             </tbody>
         </table>
@@ -139,7 +200,7 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <label>Mã số nhân viên</label>
-                                <input class="form-control my-2" type="number" placeholder="Ma_so" name="Ma_so" readonly />
+                                <input class="form-control my-2" placeholder="Ma_so" name="Ma_so" readonly />
                             </div>
                             <div class="form-group">
                                 <label>Địa chỉ</label>
@@ -147,15 +208,15 @@
                             </div>
                             <div class="form-group">
                                 <label>Ngày sinh</label>
-                                <input class="form-control my-2" placeholder="Ngay_sinh" name="Ngay_sinh" />
+                                <input class="form-control my-2" placeholder="YYYY-MM-DD" name="Ngay_sinh" />
                             </div>
                             <div class="form-group">
                                 <label>Mã chi nhánh</label>
-                                <input class="form-control my-2" type = "number" placeholder="Ma_chi_nhanh" name="Ma_chi_nhanh" />
+                                <input class="form-control my-2" placeholder="Ma_chi_nhanh" name="Ma_chi_nhanh" />
                             </div>
                             <div class="form-group">
                                 <label>Số điện thoại</label>
-                                <input class="form-control my-2" type = "number" placeholder="SDT" name="SDT" />
+                                <input class="form-control my-2" placeholder="SDT" name="SDT" />
                             </div>
                             <div class="form-group">
                                 <label>Email</label>
@@ -179,7 +240,7 @@
                     </div>
                     <form action="delete.php" method="post">
                         <div class="modal-body">
-                            <input type="text" name="tenDangNhap" class="form-control my-2" readonly />
+                            <input type="text" name="Ma_so" class="form-control my-2" readonly />
                             <p>Bạn chắc chưa ?</p>
                         </div>
                         <div class="modal-footer">
@@ -191,8 +252,10 @@
             </div>
         </div>
     </div>
+    
     </main>
     <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js' integrity='sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4' crossorigin='anonymous'></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="index.js"></script>
 </body>
 
