@@ -66,6 +66,7 @@
         }
         ?>
         <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#add">Thêm nhân viên</button>
+        <a href="salary.php" class="btn btn-primary mb-3">Tính lương nhân viên</a>
         <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
@@ -103,14 +104,6 @@
                                 <label>Mã chi nhánh</label>
                                 <input class="form-control my-2"  placeholder="Mã chi nhánh" name="Ma_chi_nhanh" />
                             </div>
-                            <div class="form-group">
-                                <label>Số điện thoại</label>
-                                <input class="form-control my-2"  placeholder="SDT" name="SDT" />
-                            </div>
-                            <div class="form-group">
-                                <label>Email</label>
-                                <input class="form-control my-2" placeholder="Email" name="Email" />
-                            </div>
                         </div>
                         <div class="modal-footer">
                             <button class="btn btn-secondary" type="button" data-dismiss="modal">Đóng lại</button>
@@ -130,8 +123,6 @@
                     <th scope="col">Ngày sinh</th>
                     <th scope="col">Giới tính</th>
                     <th scope="col">Mã chi nhánh</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">SDT</th>
                 </tr>
             </thead>
             <tbody>
@@ -139,9 +130,7 @@
                 require_once('connectDB.php');
 
                 $conn = OpenCon();
-                $query = "SELECT nv.*, em.Email, dt.SDT FROM [dbo].[Nhan_vien] nv    
-                LEFT JOIN [dbo].[Email_nhan_vien] em ON nv.Ma_so = em.Ma_so
-                LEFT JOIN [dbo].[SDT_nhan_vien] dt ON nv.Ma_so = dt.Ma_so";
+                $query = "SELECT * FROM [dbo].[Nhan_vien]";
 
                 $result = sqlsrv_query($conn,$query);
                 $data = [];
@@ -154,9 +143,7 @@
                                 "Dia_chi" => $row['Dia_chi'],
                                 'Ngay_sinh' => $row['Ngay_sinh'] instanceof DateTime ? $row['Ngay_sinh']->format('Y-m-d') : null,
                                 "Gioi_tinh" => $row['Gioi_tinh'],
-                                "Ma_chi_nhanh" => $row['Ma_chi_nhanh'],
-                                "Email" => $row["Email"],
-                                "SDT" => $row["SDT"],
+                                "Ma_chi_nhanh" => $row['Ma_chi_nhanh']
                         );
         
                         }
@@ -174,12 +161,10 @@
                             <td class='align-middle'><?php echo $row['Ngay_sinh']  ?></td> 
                             <td class='align-middle'><?php echo $row['Gioi_tinh'] ?></td>
                             <td class='align-middle'><?php echo $row['Ma_chi_nhanh'] ?></td>
-                            <td class='align-middle'><?php echo $row['Email'] ?></td>
-                            <td class='align-middle'><?php echo $row['SDT'] ?></td>
                             
                             <td class='align-middle'>
                                 <div class="d-inline-flex">
-                                    <button type='button' class='btn-edit btn btn-primary m-1' data-bs-Ma_so='<?php echo $row['Ma_so'] ?>' data-bs-Dia_chi='<?php echo $row['Dia_chi'] ?>' data-bs-Ngay_sinh='<?php echo $row['Ngay_sinh'] ?>' data-bs-Ma_chi_nhanh='<?php echo $row['Ma_chi_nhanh'] ?>' data-bs-Email='<?php echo $row['Email'] ?>' data-bs-SDT='<?php echo $row['SDT'] ?>'  data-bs-target='#Edit' data-bs-toggle='modal'>Edit</button>
+                                    <button type='button' class='btn-edit btn btn-primary m-1' data-bs-Ma_so='<?php echo $row['Ma_so'] ?>' data-bs-Dia_chi='<?php echo $row['Dia_chi'] ?>' data-bs-Ngay_sinh='<?php echo $row['Ngay_sinh'] ?>' data-bs-Ma_chi_nhanh='<?php echo $row['Ma_chi_nhanh'] ?>' data-bs-target='#Edit' data-bs-toggle='modal'>Edit</button>
                                     <button type='button' class='btn-delete btn btn-danger m-1' data-bs-Ma_so='<?php echo $row['Ma_so'] ?>' data-bs-target='#Delete' data-bs-toggle='modal'>Delete</button>
                                 </div>
                             </td>
@@ -213,14 +198,6 @@
                             <div class="form-group">
                                 <label>Mã chi nhánh</label>
                                 <input class="form-control my-2" placeholder="Ma_chi_nhanh" name="Ma_chi_nhanh" />
-                            </div>
-                            <div class="form-group">
-                                <label>Số điện thoại</label>
-                                <input class="form-control my-2" placeholder="SDT" name="SDT" />
-                            </div>
-                            <div class="form-group">
-                                <label>Email</label>
-                                <input class="form-control my-2" placeholder="Email" name="Email" />
                             </div>
                         </div>
                         <div class="modal-footer">

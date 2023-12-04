@@ -56,20 +56,16 @@
             <div class='row py-lg-5'>
                 <div class='col-lg-6 col-md-8 mx-auto'>
                     <h1 class='fw-light'>Trang Chủ</h1>
-                    <p class='lead text-muted'>Ở đây sẽ liệt kê các sản phẩm chính của trang web, bao gồm cả ảnh vào nhà hàng đang chế biến nó</p>
-                    <p>
-                        <a href='../hoadon' class='btn btn-primary my-2'>Đến hóa đơn</a>
-                        <a href='../nhanvien' class='btn btn-primary my-2'>Đến nhân viên</a>
-                        <a href='../thanhvien' class='btn btn-primary my-2'>Đến thành viên</a>
-                        
-                    </p>
                 </div>
+                <a href="bstsl.php" class="btn btn-primary mb-3">OUR BEST PROMOTIONS</a>
             </div>
         </section>
-
+        <img src="../images/Main.jpg" alt="" text="hi">
+    </img>
 
     </main>
     <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js' integrity='sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4' crossorigin='anonymous'></script>
+    
 </body>
 
 </html>

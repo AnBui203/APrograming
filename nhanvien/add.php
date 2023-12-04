@@ -7,8 +7,6 @@ $Dia_chi = $_POST['Dia_chi'];
 $Ngay_sinh = $_POST['Ngay_sinh'];
 $Gioi_tinh = $_POST['Gioi_tinh'];
 $Ma_chi_nhanh = $_POST['Ma_chi_nhanh'];
-$SDT = $_POST['SDT'];
-$Email = $_POST['Email'];
 $errors = array();
 $conn = OpenCon();
 
@@ -16,14 +14,6 @@ $kt_cn = sqlsrv_query($conn,"SELECT * FROM [dbo].[Chi_nhanh] cn where cn.Ma_chi_
 
 if (!sqlsrv_has_rows($kt_cn)) {
     $errors[] = "Chi nhánh không tồn tại";
-}
-if (!filter_var($Email, FILTER_VALIDATE_EMAIL) && !empty($Email)) {
-    $errors[] ="Email không hợp lệ";
-
-}
-
-if (!preg_match("/^0[0-9]{9}$/", $SDT) && !empty($SDT)) {
-    $errors[] = "SDT không hợp lệ";
 }
 
 if (!preg_match("/^0[0-9]{11}$/", $CCCD) ) {
@@ -35,7 +25,7 @@ if (!preg_match("/^[0-9]{4}-[0,9]{2}-[0,9]{2}$/", $Ngay_sinh) ) {
 }
 if(empty($Errors)) {
 
-$query = "EXEC Add_nhan_vien '$Ma_so','$CCCD', '$Dia_chi', '$Ngay_sinh', '$Gioi_tinh', '$Ho_va_ten', '$Ma_chi_nhanh', '$SDT', '$Email'";
+$query = "EXEC Add_nhan_vien '$Ma_so','$CCCD', '$Dia_chi', '$Ngay_sinh', '$Gioi_tinh', '$Ho_va_ten', '$Ma_chi_nhanh'";
 
 $ok = sqlsrv_query($conn,$query);
 

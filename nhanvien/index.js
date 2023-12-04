@@ -8,10 +8,6 @@ $(".btn-edit").click(function (e) {
     $("#Edit input[name='Ngay_sinh']").val(Ngay_sinh);
     const Ma_chi_nhanh = this.getAttribute('data-bs-Ma_chi_nhanh')
     $("#Edit input[name='Ma_chi_nhanh']").val(Ma_chi_nhanh);
-    const SDT = this.getAttribute('data-bs-SDT')
-    $("#Edit input[name='SDT']").val(SDT);
-    const Email = this.getAttribute('data-bs-Email')
-    $("#Edit input[name='Email']").val(Email);
     $('#Edit').modal('show');
 });
 

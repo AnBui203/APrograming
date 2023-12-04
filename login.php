@@ -19,7 +19,7 @@ if ($username === "admin") {
         echo "New record created successfully";
         header('Location: view');
     } else {
-        echo "Error: " . $query . "<br>" . $conn->error;
+        //echo "Error: " . $query . "<br>" . $conn->error;
         $err = "Sai thông tin đăng nhập";
         header('Location: index.php?err=' . $err);
     }
