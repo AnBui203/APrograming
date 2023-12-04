@@ -84,13 +84,13 @@
     // 1. Include file cấu hình kết nối đến database, khởi tạo kết nối $conn
     include_once(__DIR__ . '/../connectDB.php');
     $conn = OpenCon();
-
+    $salary = array();
     if (isset($_POST['btnSave'])) {
     $Ma_nv = $_POST['Ma_nhan_vien'];
     $mon = $_POST['Thang'];
     $year = $_POST['Nam'];
     $errors = array();
-    $salary = array();
+    
 
     if (empty($year)) {
         $errors[] = "Vui lòng nhập năm cần tính";
@@ -120,9 +120,9 @@
             $sal = sqlsrv_query($conn, $quer_sal, $params);
             if ($sal != false) {
             $salary[] = array(
-                "Ma_so" => $params[0],
-                "Ho_ten" => $row['Ho_va_ten'],
-                "Luong" => sqlsrv_fetch_array($sal)['Luong']
+                'Ma_so' => $params[0],
+                'Ho_ten' => $row['Ho_va_ten'],
+                'Luong' => sqlsrv_fetch_array($sal)['Luong']
             );
             ;
             }else{
@@ -133,9 +133,9 @@
         $sal = sqlsrv_query($conn, $quer_sal, $params);
         ;
         $Luong = sqlsrv_fetch_array($sal)['Luong'];
-        $salary[] = array( "Ma_so" => $Ma_nv,
-                            "Ho_ten" => sqlsrv_fetch_array(sqlsrv_query($conn, "SELECT Ho_va_ten FROM [dbo].[Nhan_vien] WHERE Ma_so = $Ma_nv"))['Ho_va_ten'],
-                            "Luong" => $Luong);
+        $salary[] = array( 'Ma_so' => $Ma_nv,
+                            'Ho_ten' => sqlsrv_fetch_array(sqlsrv_query($conn, "SELECT Ho_va_ten FROM [dbo].[Nhan_vien] WHERE Ma_so = $Ma_nv"))['Ho_va_ten'],
+                            'Luong' => $Luong);
     }
     sqlsrv_close($conn);
 
@@ -143,7 +143,7 @@
 
     // Redirect or other actions
     // header('location:index.php');
-}
+    }
 ?>
 
 <div class="container">
@@ -158,12 +158,12 @@
             <tbody>     
         <?php foreach ($salary as $row) : ?>  
                             
-                        <tr class="justify-content-center">
+                         <tr class="justify-content-center">
                             <th class='align-middle'><?php echo $row['Ho_ten'] ?></th>
                             <td class='align-middle'><?php echo $row['Ma_so'] ?></td>
                             <td class='align-middle'><?php echo $row['Luong'] ?></td>
                         </tr>
-        <?php endforeach;  ?>
+        <?php endforeach;?>
             </tbody>
 </div>
 

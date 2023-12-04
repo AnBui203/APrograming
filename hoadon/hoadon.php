@@ -56,15 +56,32 @@
                 $errors[] = "Khách hàng không tồn tại";
                 //echo("ma_kh lor");
             }
-        }if (!empty($ma_giam_gia)) {
+        }
+        if (!empty($ma_giam_gia)) {
              $result_ma_gg = sqlsrv_query($conn,"SELECT * FROM [dbo].[Phieu_giam_gia] pg JOIN [dbo].Thanh_vien tv
                                                 ON pg.Ma_thanh_vien = tv.Ma_thanh_vien
                                                 WHERE Ma_giam_gia = $ma_giam_gia AND Ma_khach_hang = $ma_khach_hang");
-            if (!sqlsrv_has_rows($result_ma_gg)) {
+            if($result_ma_gg != false){
+                if (!sqlsrv_has_rows($result_ma_gg)) {
                 $ma_giam_gia = NULL;
                 $errors[] = "Mã giảm giá không tồn tại cho khách hàng này";
+                }
+            }else{
+                die(print_r(sqlsrv_errors(), true));
             }
         }
+        if (!empty($ma_chuong_trinh)) {
+            $result_ma_ct = sqlsrv_query($conn,"SELECT * FROM [dbo].[Chuong_trinh_khuyen_mai] ct JOIN [dbo].[Khuyen_mai_theo_don_hang] km
+                                               ON ct.Ma_chuong_trinh = ct.Ma_chuong_trinh
+                                               WHERE ct.Ma_chuong_trinh = $ma_chuong_trinh AND ct.Ma_chi_nhanh = $ma_chi_nhanh");
+           if($result_ma_ct != false){if (!sqlsrv_has_rows($result_ma_ct)) {
+               $ma_chuong_trinh = NULL;
+               $errors[] = "Mã giảm giá không tồn tại cho chi nhánh này";
+                }
+            }else{
+                die(print_r(sqlsrv_errors(), true));
+            }
+       }
 
          if ($errors){
             echo (1);

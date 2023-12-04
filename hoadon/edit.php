@@ -49,15 +49,7 @@
     <?php
     session_start();
     $id = urldecode($_GET['id']);
-    if (isset($_GET['err'])) {
-        $errors = explode(",", urldecode($_GET['err']));
     
-        foreach ($errors as $error) {
-            echo "<p>Error: $error</p>";
-        }
-    } else {
-        echo "<p>Totally normal.</p>";
-    }
     // Truy vấn database
     // 1. Include file cấu hình kết nối đến database, khởi tạo kết nối $conn
     include_once(__DIR__ . '/../connectDB.php');
@@ -186,6 +178,17 @@
             <button type="button" name="btnSubmit" class="btn-Submit btn-primary" >
             <i class="fas fa-save"></i> Lưu thay đổi
             </button>
+            <td><?php 
+            if (isset($_GET['err'])) {
+                $errors = explode(",", urldecode($_GET['err']));
+            
+                foreach ($errors as $error) {
+                    echo "<p>Error: $error</p>";
+                }
+            } else {
+                echo "<p>Totally normal.</p>";
+            }
+            ?></td>
             <?php if (!$hideForm): ?>
                 <button
                  type='button' class='btn-delete btn-danger' data-bs-So_hoa_don='<?php echo $Invoice['So_hoa_don'] ?>' data-bs-target='#Delete' data-bs-toggle='modal'> <i class="fa-solid fa-file"></i>Xuất hóa đơn

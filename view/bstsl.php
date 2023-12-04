@@ -83,7 +83,7 @@
                 if (!sqlsrv_has_rows($resultcn)) {
                     echo('Chi nhánh không tồn tại');
                 }else{
-                    $sql = "SELECT * FROM dbo.BestSeller($ma_cn)";
+                    $sql = "SELECT * FROM dbo.BestSeller($ma_cn) ORDER BY SoLanApDung DESC";
                     $result = sqlsrv_query($conn, $sql);
                     if ($result != false) {
                         while ($row = sqlsrv_fetch_array($result)) {

@@ -1,5 +1,4 @@
 
-
 ----------------------------- Create Table -----------------------
 CREATE TABLE Chi_nhanh 
 (	
@@ -341,10 +340,7 @@ INSERT INTO Khuyen_mai_theo_don_hang
 ('103', 1000),
 ('821', 10000),
 ('822', 100000),
-('823', 50000),
-('911', 0),
-('912', 0),
-('913', 0);
+('823', 50000);
 
 -- Khuyen_mai_theo_so_tien
 INSERT INTO Khuyen_mai_theo_so_tien (Ma_chuong_trinh, So_tien_giam) VALUES
