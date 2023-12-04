@@ -87,7 +87,6 @@ AFTER UPDATE
 AS
 BEGIN
     SET NOCOUNT ON;
-			
 			DECLARE @Diem_cong DECIMAL(15,3)
 				= 
 				(SELECT hd.Tong_tien
@@ -137,7 +136,7 @@ BEGIN
 	WHERE i.So_luong = 0;
 END;
 
-UPDATE Hoa_don SET Thoi_gian_xuat = NULL WHERE So_hoa_don = '9999'
+UPDATE Hoa_don SET Thoi_gian_xuat = '2023-09-11' WHERE So_hoa_don = '1233'
 SELECT *
 FROM dbo.Hoa_don
 WHERE Thoi_gian_xuat IS NULL
@@ -156,7 +155,7 @@ WHERE Ma_khach_hang = 100011
 
 UPDATE Gom_san_pham
 SET So_luong=2
-WHERE Ma_vach='121130' AND So_hoa_don='1128'
+WHERE Ma_vach='199999' AND So_hoa_don='3443'
 
 DROP TRIGGER Tich_diem
 DROP FUNCTION Tinh_tien

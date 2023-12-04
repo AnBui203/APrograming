@@ -501,13 +501,13 @@ INSERT INTO Thuc_uong VALUES
 
 -- Hoa_don
 INSERT INTO Hoa_don VALUES 
-('1122', 'laocai1122', '2023-11-23', '0', NULL, NULL, '1003', '134545677', '1'),
-('1211', 'laocai1211', '2023-11-23', '0', NULL, '101', '1003', '134545677', '1'),
-('1233', 'laocai1233', '2023-11-23', '100017', NULL, NULL, '1001', '177123130', '1'),
-('2234', 'thongnhat2234', '2023-09-11', '100011', '111', NULL, '2017', '188989763', '2'),
-('2344', 'thongnhat2344', '2023-11-21', '100012', '113', '821', '2013', '111222333', '1'),
-('3235', 'bayhien3235', '2023-11-01', '100013', NULL, NULL, '1001', '177123130', '1'),
-('3443', 'bayhien3443', '2023-11-02', '100014', '114', '103', '1001', '177123130', '3');
+('1122', 'laocai1122', '2023-11-23', '0', NULL, NULL, '1003', '134545677', '1',NULL),
+('1211', 'laocai1211', '2023-11-23', '0', NULL, '101', '1003', '134545677', '1',NULL),
+('1233', 'laocai1233', '2023-11-23', '100017', NULL, NULL, '1001', '177123130', '1',NULL),
+('2234', 'thongnhat2234', '2023-09-11', '100011', '111', NULL, '2017', '188989763', '2',NULL),
+('2344', 'thongnhat2344', '2023-11-21', '100012', '113', '821', '2013', '111222333', '1',NULL),
+('3235', 'bayhien3235', '2023-11-01', '100013', NULL, NULL, '1001', '177123130', '1',NULL),
+('3443', 'bayhien3443', '2023-11-02', '100014', '114', '103', '1001', '177123130', '3',NULL);
 
 
 -- Khach_hang
@@ -565,7 +565,8 @@ ADD CONSTRAINT 	fk_Chi_nhanh_Ma_so_quan_ly	FOREIGN KEY (Ma_so_quan_ly,CCCD_quan_
 				REFERENCES Nhan_vien_van_phong(Ma_so,CCCD);
 ALTER TABLE Cung_cap
 ADD CONSTRAINT 	fk_Cung_cap_Ma_vach	FOREIGN KEY (Ma_vach)
-				REFERENCES San_pham(Ma_vach) ,
+				REFERENCES San_pham(Ma_vach);
+ALTER TABLE Cung_cap
 ADD	CONSTRAINT	fk_Cung_cap_Ma_so_nha_cung_cap	FOREIGN KEY (Ma_so_nha_cung_cap)
 				REFERENCES Nha_cung_cap(Ma_so);
 
@@ -578,7 +579,8 @@ ADD CONSTRAINT 	fk_SDT_chi_nhanh_Ma_chi_nhanh	FOREIGN KEY (Ma_chi_nhanh)
 
 ALTER TABLE Hop_tac
 ADD CONSTRAINT 	fk_Hop_tac_Ma_so_nha_cung_cap	FOREIGN KEY (Ma_so_nha_cung_cap)
-				REFERENCES Nha_cung_cap(Ma_so) ,
+				REFERENCES Nha_cung_cap(Ma_so);
+ALTER TABLE Hop_tac
 ADD	CONSTRAINT	fk_Hop_tac_Ma_chi_nhanh	FOREIGN KEY (Ma_chi_nhanh)
 				REFERENCES Chi_nhanh(Ma_chi_nhanh);
 
@@ -678,10 +680,13 @@ ADD CONSTRAINT fk_Thuc_uong_Ma_vach FOREIGN KEY (Ma_vach) REFERENCES Thuc_pham(M
 ALTER TABLE Hoa_don
 ADD CONSTRAINT fk_Hoa_don_Ma_khach_hang FOREIGN KEY (Ma_khach_hang) REFERENCES Khach_hang(Ma_khach_hang);
 ALTER TABLE Hoa_don
-ADD	CONSTRAINT fk_Hoa_don_Ma_giam_gia FOREIGN KEY (Ma_giam_gia) REFERENCES Phieu_giam_gia(Ma_giam_gia),
-ADD	CONSTRAINT fk_Hoa_don_Ma_chuong_trinh FOREIGN KEY (Ma_chuong_trinh) REFERENCES Khuyen_mai_theo_don_hang(Ma_chuong_trinh),
+ADD	CONSTRAINT fk_Hoa_don_Ma_giam_gia FOREIGN KEY (Ma_giam_gia) REFERENCES Phieu_giam_gia(Ma_giam_gia);
+ALTER TABLE Hoa_don
+ADD	CONSTRAINT fk_Hoa_don_Ma_chuong_trinh FOREIGN KEY (Ma_chuong_trinh) REFERENCES Khuyen_mai_theo_don_hang(Ma_chuong_trinh);
+ALTER TABLE Hoa_don
 ADD	CONSTRAINT fk_Hoa_don_Ma_so_nhan_vien_duyet 
-		FOREIGN KEY (Ma_so_nhan_vien_duyet,CCCD_nhan_vien_duyet) REFERENCES Nhan_vien_phuc_vu(Ma_so,CCCD),
+		FOREIGN KEY (Ma_so_nhan_vien_duyet,CCCD_nhan_vien_duyet) REFERENCES Nhan_vien_phuc_vu(Ma_so,CCCD);
+ALTER TABLE Hoa_don
 ADD	CONSTRAINT fk_Hoa_don_Ma_chi_nhanh FOREIGN KEY (Ma_chi_nhanh) REFERENCES Chi_nhanh(Ma_chi_nhanh);
 
 ALTER TABLE Thanh_vien

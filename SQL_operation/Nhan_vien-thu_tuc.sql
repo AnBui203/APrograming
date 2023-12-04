@@ -18,7 +18,6 @@ CREATE PROCEDURE Add_nhan_vien
     @Email VARCHAR(30)
 AS
 BEGIN
- 
     -- Insert data into Nhan_vien, SDT_nhan_vien, Email_nhan_vien tables
     INSERT INTO Nhan_vien (Ma_so, CCCD, Dia_chi, Ngay_sinh, Gioi_tinh, Ho_va_ten, Ma_chi_nhanh)
     VALUES (@Ma_so, @CCCD, @Dia_chi, @Ngay_sinh, @Gioi_tinh, @Ho_va_ten, @Ma_chi_nhanh);
