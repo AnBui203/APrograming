@@ -2,7 +2,8 @@ CREATE PROCEDURE Delete_nhan_vien
 	@Ma_so CHAR(10)
 AS
 BEGIN
-	
+	IF (NOT EXISTS(SELECT * FROM Nhan_vien WHERE Nhan_vien.Ma_so = @Ma_so))
+		THROW 50000, 'Ma so nhan vien khong ton tai',1;
 	DELETE FROM Nhan_vien WHERE Nhan_vien.Ma_so = @Ma_so;
 		
 END
@@ -13,43 +14,44 @@ CREATE PROCEDURE Add_nhan_vien
     @Ngay_sinh DATE,
     @Gioi_tinh CHAR(5),
     @Ho_va_ten VARCHAR(30),
-    @Ma_chi_nhanh CHAR(10),
-    @SDT VARCHAR(20),
-    @Email VARCHAR(30)
+    @Ma_chi_nhanh CHAR(10)
 AS
 BEGIN
+	IF (NOT EXISTS (SELECT * FROM Chi_nhanh WHERE Chi_nhanh.Ma_chi_nhanh = @Ma_chi_nhanh))
+		THROW 50000, 'Chi nhanh khong ton tai',1;
+	IF (EXISTS(SELECT * FROM Nhan_vien WHERE Nhan_vien.Ma_so = @Ma_so))
+		THROW 50000, 'Ma so nhan vien da ton tai',1;
+	IF (EXISTS (SELECT * FROM Nhan_vien WHERE Nhan_vien.CCCD = @CCCD))
+		THROW 50000, 'CCCD nhan vien da ton tai',1;
+	IF NOT (LEN(@CCCD) = 12 AND @CCCD LIKE '0[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]')
+		THROW 50000, 'Can cuoc cong dan khong dung dinh dang 12 chu so', 1;
+	IF (@Gioi_tinh NOT IN ('Nam', 'Nu'))
+		THROW 50000, 'Gioi tinh khong dung dinh danh, vui long dien Nam hoac Nu', 1
+	IF NOT (@Ngay_sinh LIKE '[1-2][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]')
+		THROW 50000, 'Ngay sinh khong dung dinh danh hoac nam sinh khong dung yeu cau', 1;
     -- Insert data into Nhan_vien, SDT_nhan_vien, Email_nhan_vien tables
     INSERT INTO Nhan_vien (Ma_so, CCCD, Dia_chi, Ngay_sinh, Gioi_tinh, Ho_va_ten, Ma_chi_nhanh)
     VALUES (@Ma_so, @CCCD, @Dia_chi, @Ngay_sinh, @Gioi_tinh, @Ho_va_ten, @Ma_chi_nhanh);
-
-    INSERT INTO SDT_nhan_vien(Ma_so, CCCD, SDT) VALUES (@Ma_so, @CCCD, @SDT);
-
-    INSERT INTO Email_nhan_vien(Ma_so, CCCD, Email) VALUES (@Ma_so, @CCCD, @Email);
 END;
 
 CREATE PROCEDURE Update_nhan_vien
 	@Ma_so CHAR(10),
 	@Dia_chi VARCHAR(30),
 	@Ngay_sinh DATE,
-    @Ma_chi_nhanh CHAR(10),
-    @SDT VARCHAR(20),
-    @Email VARCHAR(30)
+    @Ma_chi_nhanh CHAR(10)
 AS
 BEGIN
-	
+	IF (NOT EXISTS (SELECT * FROM Chi_nhanh WHERE Chi_nhanh.Ma_chi_nhanh = @Ma_chi_nhanh))
+		THROW 50000, 'Chi nhanh khong ton tai',1;
+	IF (NOT EXISTS(SELECT * FROM Nhan_vien WHERE Nhan_vien.Ma_so = @Ma_so))
+		THROW 50000, 'Ma so nhan vien khong ton tai',1;
+	IF NOT (@Ngay_sinh LIKE '[1-2][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]')
+		THROW 50000, 'Ngay sinh khong dung dinh danh hoac nam sinh khong dung yeu cau', 1;
 	DECLARE @CCCD char(12) =(SELECT CCCD FROM Nhan_vien WHERE Ma_so = @Ma_so)
 		UPDATE Nhan_vien SET Nhan_vien.Dia_chi = @Dia_chi,
 			Nhan_vien.Ngay_sinh= @Ngay_sinh,
 			Nhan_vien.Ma_chi_nhanh = @Ma_chi_nhanh
 			WHERE Nhan_vien.Ma_so = @Ma_so;
-		IF NOT EXISTS (SELECT * FROM Email_nhan_vien WHERE Ma_so = @Ma_so)
-			INSERT INTo Email_nhan_vien VALUES (@Ma_so, @CCCD, @Email )
-		ELSE
-			UPDATE Email_nhan_vien SET Email_nhan_vien.Email = @Email WHERE Email_nhan_vien.Ma_so = @Ma_so AND @Email != '';
-		IF NOT EXISTS (SELECT * FROM SDT_nhan_vien WHERE Ma_so = @Ma_so)
-			INSERT INTo SDT_nhan_vien VALUES (@Ma_so, @CCCD, @SDT )
-		ELSE
-			UPDATE SDT_nhan_vien SET SDT_nhan_vien.SDT = @SDT WHERE SDT_nhan_vien.Ma_so = @Ma_so AND @SDT != '' ;
 END
 
 
@@ -142,3 +144,6 @@ DROP PROC Don_hang_theo_cn;
 DROP PROC Hien_thi_gio_lam_viec;
 EXEC Hien_thi_gio_lam_viec '2', 2022, 11 ;
 
+DROP PROC Add_nhan_vien; 
+DROP PROC Update_nhan_vien;
+EXEC Add_nhan_vien '8788','0123456789012','12 ok','2001-12-20','Nu','Ok Van A','1','0999989999','a@a.cn'
